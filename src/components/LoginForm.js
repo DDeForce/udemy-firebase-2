@@ -11,7 +11,7 @@ const LoginForm = ({ existingUser }) => {
     event.preventDefault();
 
     try {
-      await firebaseAuthService.registerUser(username, password);
+      await firebaseAuthService.loginUser(username, password);
       setUsername("");
       setPassword("");
     } catch (error) {
@@ -19,6 +19,28 @@ const LoginForm = ({ existingUser }) => {
       alert(error.message);
     }
   };
+
+  const handleSendResetPasswordEmail = async () => {
+    if (!username) {
+      alert("Missing username!");
+      return;
+    }
+
+    try {
+      await firebaseAuthService.sendPasswordResetEmail(username);
+      alert("Sent the password reset email");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  // const handleLoginWithGoogle = async () => {
+  //   try {
+  //     await firebaseAuthService.loginWithGoogle();
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
+  // };
 
   const handleLogout = () => {
     firebaseAuthService.logoutUser();
@@ -58,7 +80,21 @@ const LoginForm = ({ existingUser }) => {
             />
           </label>
           <div className="button-box">
-            <button className="primary-button">Submit</button>
+            <button className="primary-button">Login</button>
+            <button
+              type="button"
+              className="primary-button"
+              onClick={handleSendResetPasswordEmail}
+            >
+              Reset Password
+            </button>
+            {/* <button
+              type="button"
+              className="primary-button"
+              onClick={handleLoginWithGoogle}
+            >
+              Signin with Google
+            </button> */}
           </div>
         </form>
       )}

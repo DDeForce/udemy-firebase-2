@@ -7,7 +7,7 @@ const registerUser = (email, password) => {
 };
 
 const loginUser = (email, password) => {
-  return auth.signinUserWithEmailAndPassword(email, password);
+  return auth.signInWithEmailAndPassword(email, password);
 };
 
 const logoutUser = () => {
