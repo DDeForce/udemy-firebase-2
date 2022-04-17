@@ -1,5 +1,7 @@
 import firebase from "./FirebaseConfig";
 
+// import db from "./FirebaseConfig";
+
 const firestore = firebase.firestore();
 
 const createDocument = (collection, document) => {
@@ -7,7 +9,7 @@ const createDocument = (collection, document) => {
 };
 
 const readDocuments = (collection) => {
-  return firebase.collection(collection).get();
+  return firestore.collection(collection).get();
 };
 
 const FirebaseFirestoreService = {

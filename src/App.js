@@ -84,6 +84,23 @@ function App() {
         <LoginForm existingUser={user} />
       </div>
       <div className="main">
+        <div className="center">
+          <div className="recipe-list-box">
+            {recipes && recipes.length > 0 ? (
+              <div className="recipe-list">
+                {recipes.map((recipe, i) => (
+                  <div className="recipe-card" key={i}>
+                    <div className="recipe-name">{recipe.name}</div>
+                    <div className="recipe-field">{recipe.category}</div>
+                    <div className="recipe-field">
+                      {recipe.publishDate.toString()}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </div>
         {user ? <AddEditRecipeForm handleAddRecipe={handleAddRecipe} /> : null}
       </div>
     </div>
