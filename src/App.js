@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // firebase
 import firebaseAuthService from "./FirebaseAuthService";
+import FirebaseFirestoreService from "./FirebaseFirestoreService";
 
 // css
 import "./App.css";
@@ -9,10 +10,10 @@ import "./App.css";
 // components
 import LoginForm from "./components/LoginForm";
 import AddEditRecipeForm from "./components/AddEditRecipeForm";
-import FirebaseFirestoreService from "./FirebaseFirestoreService";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [recipes, setRecipes] = useState([]);
 
   firebaseAuthService.subcribeToAuthChanges(setUser);
 
@@ -23,13 +24,58 @@ function App() {
         newRecipe
       );
 
-      // TODO: fatch new recipes from firestore
+      handleFetchRecipes();
 
       alert(`succesfully created a recipe with an ID = ${response.id}`);
     } catch (error) {
       alert(error.massage);
     }
   };
+
+  const fetchRecipes = async () => {
+    let fetchRecipes = [];
+
+    try {
+      const response = await FirebaseFirestoreService.readDocuments("recipes");
+
+      const newRecipes = response.docs.map((recipeDoc) => {
+        const id = recipeDoc.id;
+        const data = recipeDoc.data();
+        data.publishDate = new Date(data.publishDate.seconds * 1000);
+
+        return { ...data, id };
+      });
+
+      fetchRecipes = [...newRecipes];
+    } catch (error) {
+      console.log(error.massage);
+      throw error;
+    }
+
+    return fetchRecipes;
+  };
+
+  const handleFetchRecipes = async () => {
+    try {
+      const fatchRecipes = await fetchRecipes();
+
+      setRecipes(fatchRecipes);
+    } catch (error) {
+      console.log(error.massage);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    fetchRecipes()
+      .then((fetchRecipes) => {
+        setRecipes(fetchRecipes);
+      })
+      .catch((error) => {
+        console.log(error.massage);
+        throw error;
+      });
+  }, [user]);
 
   return (
     <div className="App">
