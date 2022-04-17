@@ -116,8 +116,10 @@ const AddEditRecipeForm = ({ handleAddRecipe }) => {
         <h3 className="text-center">Ingredients</h3>
         <table className="ingredients-table">
           <thead>
-            <tr className="table-header">Ingredient</tr>
-            <tr className="table-header">Delete</tr>
+            <tr>
+              <th className="table-header">Ingredient</th>
+              <th className="table-header">Delete</th>
+            </tr>
           </thead>
           <tbody>
             {ingredients && ingredients.length > 0

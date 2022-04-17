@@ -38,7 +38,7 @@ function App() {
         <LoginForm existingUser={user} />
       </div>
       <div className="main">
-        <AddEditRecipeForm handleAddRecipe={handleAddRecipe} />
+        {user ? <AddEditRecipeForm handleAddRecipe={handleAddRecipe} /> : null}
       </div>
     </div>
   );
