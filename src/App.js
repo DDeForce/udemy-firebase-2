@@ -14,10 +14,11 @@ import AddEditRecipeForm from "./components/AddEditRecipeForm";
 function App() {
   const [user, setUser] = useState(null);
   const [recipes, setRecipes] = useState([]);
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
   // current recipe that has been edited
-  // const [currentRecipe, setCurrentRecipe] = useState(null);
-  let currentRecipe = null;
+  const [currentRecipe, setCurrentRecipe] = useState(null);
+  // let currentRecipe = null;
 
   firebaseAuthService.subcribeToAuthChanges(setUser);
 
@@ -93,32 +94,57 @@ function App() {
         newRecipe
       );
       handleFetchRecipes();
+
       alert(`Successfuly updated a recipe with id of ${recipeId}`);
 
-      // setCurrentRecipe(null);
-      currentRecipe = null;
+      await setCurrentRecipe(null);
+      // currentRecipe = null;
     } catch (error) {
       alert(error.message);
       throw error;
     }
   };
 
-  const handleEditRecipeClick = (recipeId) => {
+  const handleEditRecipeClick = async (recipeId) => {
     const selectedRecipe = recipes.find((recipe) => {
       return recipe.id === recipeId;
     });
     console.log("selectedrecipe = > ", selectedRecipe);
     if (selectedRecipe) {
-      // setCurrentRecipe(recipes);
-      currentRecipe = selectedRecipe;
-      console.log("in app currentRecipe => ", currentRecipe);
+      await delay(200);
+      console.log("1 sec");
+      setCurrentRecipe(selectedRecipe);
+      // currentRecipe = selectedRecipe;
       window.scrollTo(0, document.body.scrollHeight);
     }
   };
 
-  const handleEditRecipeCancel = () => {
-    // setCurrentRecipe(null);
-    currentRecipe = null;
+  const handleEditRecipeCancel = async () => {
+    await delay(200);
+    setCurrentRecipe(null);
+    // currentRecipe = null;
+  };
+
+  // handling delete recipe
+  const handleDeleteRecipe = async (recipeId) => {
+    const deleteConfirmation = window.confirm(
+      "Are you sure you want to delete this recipe? OK for Yes. Cancel for No."
+    );
+
+    if (deleteConfirmation) {
+      try {
+        await FirebaseFirestoreService.deleteDocument("recipe", recipeId);
+
+        handleFetchRecipes();
+
+        setCurrentRecipe(null);
+
+        alert(`Succsessfully deleted recipe Id = ${recipeId}`);
+      } catch (error) {
+        alert(error.message);
+        throw error;
+      }
+    }
   };
 
   // formating for view
@@ -145,7 +171,7 @@ function App() {
 
   // handling delete recipes
 
-  // useEfect
+  // useEfects
   useEffect(() => {
     fetchRecipes()
       .then((fetchRecipes) => {
@@ -156,6 +182,11 @@ function App() {
         throw error;
       });
   }, [user]);
+
+  useEffect(() => {
+    console.log(`recipes in App.js: `, recipes);
+    console.log(`current recipe in App.js: `, currentRecipe);
+  }, [currentRecipe, recipes]);
 
   return (
     <div className="App">
@@ -199,6 +230,7 @@ function App() {
           <AddEditRecipeForm
             existingRecipe={currentRecipe}
             handleUpdateRecipe={handleUpdateRecipe}
+            handleDeleteRecipe={handleDeleteRecipe}
             handleEditRecipeCancel={handleEditRecipeCancel}
             handleAddRecipe={handleAddRecipe}
           />

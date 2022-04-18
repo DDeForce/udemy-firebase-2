@@ -1,4 +1,6 @@
 import firebase from "./FirebaseConfig";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "./FirebaseConfig";
 
 // import db from "./FirebaseConfig";
 
@@ -27,10 +29,16 @@ const updateDocument = (collection, id, document) => {
   return firestore.collection(collection).doc(id).update(document);
 };
 
+const deleteDocument = (collection, id) => {
+  // return firestore.collection(collection).doc(id).delete();
+  return deleteDoc(doc(db, "recipes", id));
+};
+
 const FirebaseFirestoreService = {
   createDocument,
   readDocuments,
   updateDocument,
+  deleteDocument,
 };
 
 export default FirebaseFirestoreService;

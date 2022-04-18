@@ -4,6 +4,7 @@ const AddEditRecipeForm = ({
   existingRecipe,
   handleUpdateRecipe,
   handleEditRecipeCancel,
+  handleDeleteRecipe,
   handleAddRecipe,
 }) => {
   const [name, setName] = useState("");
@@ -68,7 +69,7 @@ const AddEditRecipeForm = ({
   };
 
   useEffect(() => {
-    console.log(`Existing recipe ${existingRecipe}`);
+    console.log(`current recipe in AddEdit.js: ${existingRecipe}`);
     if (existingRecipe) {
       setName(existingRecipe.name);
       setCategory(existingRecipe.category);
@@ -212,6 +213,13 @@ const AddEditRecipeForm = ({
               className="primary-button action-button"
             >
               Cancel
+            </button>
+            <button
+              type="button"
+              className="primary-button action-button"
+              onClick={() => handleDeleteRecipe(existingRecipe.id)}
+            >
+              Delete
             </button>
           </>
         ) : null}
