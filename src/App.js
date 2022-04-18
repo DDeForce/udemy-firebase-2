@@ -15,8 +15,13 @@ function App() {
   const [user, setUser] = useState(null);
   const [recipes, setRecipes] = useState([]);
 
+  // current recipe that has been edited
+  // const [currentRecipe, setCurrentRecipe] = useState(null);
+  let currentRecipe = null;
+
   firebaseAuthService.subcribeToAuthChanges(setUser);
 
+  // handleing add recipes
   const handleAddRecipe = async (newRecipe) => {
     try {
       const response = await FirebaseFirestoreService.createDocument(
@@ -33,10 +38,23 @@ function App() {
   };
 
   const fetchRecipes = async () => {
+    const queries = [];
+
+    if (!user) {
+      queries.push({
+        field: "isPublished",
+        condition: "==",
+        value: true,
+      });
+    }
+
     let fetchRecipes = [];
 
     try {
-      const response = await FirebaseFirestoreService.readDocuments("recipes");
+      const response = await FirebaseFirestoreService.readDocuments({
+        collection: "recipes",
+        queries: queries,
+      });
 
       const newRecipes = response.docs.map((recipeDoc) => {
         const id = recipeDoc.id;
@@ -66,6 +84,68 @@ function App() {
     }
   };
 
+  // handling edit recipes
+  const handleUpdateRecipe = async (newRecipe, recipeId) => {
+    try {
+      await FirebaseFirestoreService.updateDocument(
+        "recipes",
+        recipeId,
+        newRecipe
+      );
+      handleFetchRecipes();
+      alert(`Successfuly updated a recipe with id of ${recipeId}`);
+
+      // setCurrentRecipe(null);
+      currentRecipe = null;
+    } catch (error) {
+      alert(error.message);
+      throw error;
+    }
+  };
+
+  const handleEditRecipeClick = (recipeId) => {
+    const selectedRecipe = recipes.find((recipe) => {
+      return recipe.id === recipeId;
+    });
+    console.log("selectedrecipe = > ", selectedRecipe);
+    if (selectedRecipe) {
+      // setCurrentRecipe(recipes);
+      currentRecipe = selectedRecipe;
+      console.log("in app currentRecipe => ", currentRecipe);
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  };
+
+  const handleEditRecipeCancel = () => {
+    // setCurrentRecipe(null);
+    currentRecipe = null;
+  };
+
+  // formating for view
+  const lookupCategoryLabel = (categoryKey) => {
+    const categories = {
+      breadsSandwichesAndPizzas: "Breads, Sandwiches and Pizzas",
+      eggsAndBreakfast: "Eggs & Breakfast",
+      dessertsAndBakedGoods: "Desserts & Baked Goods",
+      fishAndSeafood: "Fish & Seafood",
+      vegetables: "Vegetables",
+    };
+    const label = categories[categoryKey];
+
+    return label;
+  };
+
+  const formatDate = (date) => {
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1;
+    const year = date.getFullYear();
+
+    return `${month}-${day}-${year}`;
+  };
+
+  // handling delete recipes
+
+  // useEfect
   useEffect(() => {
     fetchRecipes()
       .then((fetchRecipes) => {
@@ -90,18 +170,39 @@ function App() {
               <div className="recipe-list">
                 {recipes.map((recipe, i) => (
                   <div className="recipe-card" key={i}>
+                    {recipe.isPublished === false ? (
+                      <div className="unpublished">UNPUBLISHED</div>
+                    ) : null}
                     <div className="recipe-name">{recipe.name}</div>
-                    <div className="recipe-field">{recipe.category}</div>
                     <div className="recipe-field">
-                      {recipe.publishDate.toString()}
+                      Category: {lookupCategoryLabel(recipe.category)}
                     </div>
+                    <div className="recipe-field">
+                      Publish Date: {formatDate(recipe.publishDate)}
+                    </div>
+                    {user ? (
+                      <button
+                        type="button"
+                        className="primary-button edit-button"
+                        onClick={() => handleEditRecipeClick(recipe.id)}
+                      >
+                        Edit
+                      </button>
+                    ) : null}
                   </div>
                 ))}
               </div>
             ) : null}
           </div>
         </div>
-        {user ? <AddEditRecipeForm handleAddRecipe={handleAddRecipe} /> : null}
+        {user ? (
+          <AddEditRecipeForm
+            existingRecipe={currentRecipe}
+            handleUpdateRecipe={handleUpdateRecipe}
+            handleEditRecipeCancel={handleEditRecipeCancel}
+            handleAddRecipe={handleAddRecipe}
+          />
+        ) : null}
       </div>
     </div>
   );
