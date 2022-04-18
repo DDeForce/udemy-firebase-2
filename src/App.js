@@ -15,6 +15,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [currentRecipe, setCurrentRecipe] = useState(null);
+  const [categoryFilter, setCategoryFilter] = useState("");
 
   // delay for bug in edit
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -40,6 +41,14 @@ function App() {
 
   const fetchRecipes = async () => {
     const queries = [];
+
+    if (categoryFilter) {
+      queries.push({
+        field: "category",
+        condition: "==",
+        value: categoryFilter,
+      });
+    }
 
     if (!user) {
       queries.push({
@@ -176,12 +185,13 @@ function App() {
         console.log(error.massage);
         throw error;
       });
-  }, [user]);
+  }, [user, categoryFilter]);
 
-  useEffect(() => {
-    console.log(`recipes in App.js: `, recipes);
-    console.log(`current recipe in App.js: `, currentRecipe);
-  }, [currentRecipe, recipes]);
+  // useEfect for debuging purpuses
+  // useEffect(() => {
+  //   console.log(`recipes in App.js: `, recipes);
+  //   console.log(`current recipe in App.js: `, currentRecipe);
+  // }, [currentRecipe, recipes]);
 
   return (
     <div className="App">
@@ -190,6 +200,28 @@ function App() {
         <LoginForm existingUser={user} />
       </div>
       <div className="main">
+        <div className="row filters">
+          <label className="recipe-label input-label">
+            category:
+            <select
+              value={categoryFilter}
+              required
+              className="select"
+              onChange={(e) => setCategoryFilter(e.target.value)}
+            >
+              <option value=""></option>
+              <option value="breadsSandwichesAndPizzas">
+                Breads, Sandwiches and Pizzas
+              </option>
+              <option value="eggsAndBreakfast">Eggs & Breakfast</option>
+              <option value="dessertsAndBakedGoods">
+                Desserts & Baked Goods
+              </option>
+              S<option value="fishAndSeafood">Fish & Seafood</option>
+              <option value="vegetables">Vegetables</option>
+            </select>
+          </label>
+        </div>
         <div className="center">
           <div className="recipe-list-box">
             {recipes && recipes.length > 0 ? (
