@@ -14,12 +14,12 @@ import AddEditRecipeForm from "./components/AddEditRecipeForm";
 function App() {
   const [user, setUser] = useState(null);
   const [recipes, setRecipes] = useState([]);
+  const [currentRecipe, setCurrentRecipe] = useState(null);
+
+  // delay for bug in edit
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-  // current recipe that has been edited
-  const [currentRecipe, setCurrentRecipe] = useState(null);
-  // let currentRecipe = null;
-
+  // setting user
   firebaseAuthService.subcribeToAuthChanges(setUser);
 
   // handleing add recipes
@@ -98,7 +98,6 @@ function App() {
       alert(`Successfuly updated a recipe with id of ${recipeId}`);
 
       await setCurrentRecipe(null);
-      // currentRecipe = null;
     } catch (error) {
       alert(error.message);
       throw error;
@@ -114,7 +113,6 @@ function App() {
       await delay(200);
       console.log("1 sec");
       setCurrentRecipe(selectedRecipe);
-      // currentRecipe = selectedRecipe;
       window.scrollTo(0, document.body.scrollHeight);
     }
   };
@@ -122,7 +120,6 @@ function App() {
   const handleEditRecipeCancel = async () => {
     await delay(200);
     setCurrentRecipe(null);
-    // currentRecipe = null;
   };
 
   // handling delete recipe
@@ -168,8 +165,6 @@ function App() {
 
     return `${month}-${day}-${year}`;
   };
-
-  // handling delete recipes
 
   // useEfects
   useEffect(() => {
