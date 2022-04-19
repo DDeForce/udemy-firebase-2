@@ -16,6 +16,7 @@ function App() {
   const [recipes, setRecipes] = useState([]);
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [orderBy, setOrderBy] = useState("publishDateDesc");
 
   // delay for bug in edit
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -58,12 +59,30 @@ function App() {
       });
     }
 
+    const orderByField = "publishDate";
+    let orderByDirection;
+
+    if (orderBy) {
+      switch (orderBy) {
+        case "publishDateAsc":
+          orderByDirection = "asc";
+          break;
+        case "publishDateDesc":
+          orderByDirection = "desc";
+          break;
+        default:
+          break;
+      }
+    }
+
     let fetchRecipes = [];
 
     try {
       const response = await FirebaseFirestoreService.readDocuments({
         collection: "recipes",
         queries: queries,
+        orderByField: orderByField,
+        orderByDirection: orderByDirection,
       });
 
       const newRecipes = response.docs.map((recipeDoc) => {
@@ -185,7 +204,7 @@ function App() {
         console.log(error.massage);
         throw error;
       });
-  }, [user, categoryFilter]);
+  }, [user, categoryFilter, orderBy]);
 
   // useEfect for debuging purpuses
   // useEffect(() => {
@@ -219,6 +238,20 @@ function App() {
               </option>
               S<option value="fishAndSeafood">Fish & Seafood</option>
               <option value="vegetables">Vegetables</option>
+            </select>
+          </label>
+          <label className="input-label">
+            <select
+              value={orderBy}
+              className="select"
+              onChange={(e) => setOrderBy(e.target.value)}
+            >
+              <option value="publishDateDesc">
+                Publish Date (newest - oldest)
+              </option>
+              <option value="publishDateAsc">
+                Publish Date (oldest - newest)
+              </option>
             </select>
           </label>
         </div>
