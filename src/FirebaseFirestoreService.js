@@ -1,5 +1,5 @@
 import firebase from "./FirebaseConfig";
-import { doc, deleteDoc, collection } from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "./FirebaseConfig";
 
 // import db from "./FirebaseConfig";

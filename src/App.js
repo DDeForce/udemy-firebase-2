@@ -225,6 +225,7 @@ function App() {
         console.log(error.massage);
         throw error;
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, categoryFilter, orderBy, recipesPerPage]);
 
   // useEfect for debuging purpuses
