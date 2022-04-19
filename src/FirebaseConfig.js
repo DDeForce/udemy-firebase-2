@@ -3,6 +3,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -20,6 +21,10 @@ if (!firebase.apps.length) {
 // Initialize Firebase and export
 const app = initializeApp(config);
 const db = getFirestore(app);
-export { db };
+const storage = getStorage(app);
 
+// const firebaseConfig = {
+//   storage,
+// };
+export { db, storage };
 export default firebase;
