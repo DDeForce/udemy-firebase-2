@@ -17,6 +17,7 @@ function App() {
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderBy, setOrderBy] = useState("publishDateDesc");
+  const [recipesPerPage, setRecipesPerPage] = useState(3);
 
   // delay for bug in edit
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -40,7 +41,7 @@ function App() {
     }
   };
 
-  const fetchRecipes = async () => {
+  const fetchRecipes = async (cursorId = "") => {
     const queries = [];
 
     if (categoryFilter) {
@@ -83,6 +84,8 @@ function App() {
         queries: queries,
         orderByField: orderByField,
         orderByDirection: orderByDirection,
+        perPage: recipesPerPage,
+        cursorId: cursorId,
       });
 
       const newRecipes = response.docs.map((recipeDoc) => {
@@ -93,7 +96,11 @@ function App() {
         return { ...data, id };
       });
 
-      fetchRecipes = [...newRecipes];
+      if (cursorId) {
+        fetchRecipes = [...recipes, ...newRecipes];
+      } else {
+        fetchRecipes = [...newRecipes];
+      }
     } catch (error) {
       console.log(error.massage);
       throw error;
@@ -102,9 +109,23 @@ function App() {
     return fetchRecipes;
   };
 
-  const handleFetchRecipes = async () => {
+  const handleRecipesPerPageChange = (event) => {
+    const recipesPerPage = event.target.value;
+
+    setRecipes([]);
+    setRecipesPerPage(recipesPerPage);
+  };
+
+  const handleLoadMoreRecipesClick = () => {
+    const lastRecipe = recipes[recipes.length - 1];
+    const cursorId = lastRecipe.id;
+
+    handleFetchRecipes(cursorId);
+  };
+
+  const handleFetchRecipes = async (cursorId = "") => {
     try {
-      const fatchRecipes = await fetchRecipes();
+      const fatchRecipes = await fetchRecipes(cursorId);
 
       setRecipes(fatchRecipes);
     } catch (error) {
@@ -204,7 +225,7 @@ function App() {
         console.log(error.massage);
         throw error;
       });
-  }, [user, categoryFilter, orderBy]);
+  }, [user, categoryFilter, orderBy, recipesPerPage]);
 
   // useEfect for debuging purpuses
   // useEffect(() => {
@@ -286,6 +307,31 @@ function App() {
             ) : null}
           </div>
         </div>
+        {recipes && recipes.length > 0 ? (
+          <>
+            <label className="input-label">
+              Recipes Per Page:
+              <select
+                value={recipesPerPage}
+                onChange={handleRecipesPerPageChange}
+                className="select"
+              >
+                <option value="3">3</option>
+                <option value="6">6</option>
+                <option value="9">9</option>
+              </select>
+            </label>
+            <div className="pagination">
+              <button
+                type="button"
+                className="primary-button"
+                onClick={handleLoadMoreRecipesClick}
+              >
+                Load more recipes
+              </button>
+            </div>
+          </>
+        ) : null}
         {user ? (
           <AddEditRecipeForm
             existingRecipe={currentRecipe}
