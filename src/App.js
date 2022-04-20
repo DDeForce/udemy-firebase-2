@@ -5,7 +5,7 @@ import firebaseAuthService from "./FirebaseAuthService";
 import FirebaseFirestoreService from "./FirebaseFirestoreService";
 
 // css
-import "./App.css";
+import "./App.scss";
 
 // components
 import LoginForm from "./components/LoginForm";
@@ -18,6 +18,8 @@ function App() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderBy, setOrderBy] = useState("publishDateDesc");
   const [recipesPerPage, setRecipesPerPage] = useState(3);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   // delay for bug in edit
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -217,6 +219,8 @@ function App() {
 
   // useEfects
   useEffect(() => {
+    setIsLoading(true);
+
     fetchRecipes()
       .then((fetchRecipes) => {
         setRecipes(fetchRecipes);
@@ -224,7 +228,8 @@ function App() {
       .catch((error) => {
         console.log(error.massage);
         throw error;
-      });
+      })
+      .finally(() => setIsLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, categoryFilter, orderBy, recipesPerPage]);
 
@@ -279,6 +284,20 @@ function App() {
         </div>
         <div className="center">
           <div className="recipe-list-box">
+            {isLoading ? (
+              <div className="fire">
+                <div className="flames">
+                  <div className="flame"></div>
+                  <div className="flame"></div>
+                  <div className="flame"></div>
+                  <div className="flame"></div>
+                </div>
+                <div className="logs"></div>
+              </div>
+            ) : null}
+            {isLoading && recipes && recipes.length > 0 ? (
+              <h5 className="no-recipes">No recipes founds</h5>
+            ) : null}
             {recipes && recipes.length > 0 ? (
               <div className="recipe-list">
                 {recipes.map((recipe, i) => (

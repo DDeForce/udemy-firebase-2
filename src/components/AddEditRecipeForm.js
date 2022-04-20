@@ -69,6 +69,16 @@ const AddEditRecipeForm = ({
     resetForm();
   };
 
+  const handleDeleteIngredient = (ingredient) => {
+    // should use splice
+    // const newIngredients = ingredients.splice(
+    //   ingredients.indexOf(ingredient),
+    //   1
+    // );
+    const newIngredients = ingredients.filter((item) => item !== ingredient);
+    setIngredients(newIngredients);
+  };
+
   const resetForm = () => {
     setName("");
     setCategory("");
@@ -178,7 +188,7 @@ const AddEditRecipeForm = ({
           </thead>
           <tbody>
             {ingredients && ingredients.length > 0
-              ? ingredients.map((ingredient) => {
+              ? ingredients.map((ingredient, i) => {
                   return (
                     <tr key={ingredient}>
                       <td className="table-data text-center">{ingredient}</td>
@@ -186,6 +196,7 @@ const AddEditRecipeForm = ({
                         <button
                           type="button"
                           className="secondary-button ingredient-delete-button"
+                          onClick={() => handleDeleteIngredient(ingredient)}
                         >
                           Delete
                         </button>
