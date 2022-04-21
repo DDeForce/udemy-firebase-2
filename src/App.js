@@ -161,7 +161,7 @@ function App() {
     });
     console.log("selectedrecipe = > ", selectedRecipe);
     if (selectedRecipe) {
-      await delay(200);
+      await delay(100);
       console.log("1 sec");
       setCurrentRecipe(selectedRecipe);
       window.scrollTo(0, document.body.scrollHeight);
@@ -169,7 +169,7 @@ function App() {
   };
 
   const handleEditRecipeCancel = async () => {
-    await delay(200);
+    await delay(100);
     setCurrentRecipe(null);
   };
 
