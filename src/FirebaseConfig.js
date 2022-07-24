@@ -3,7 +3,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { connectStorageEmulator, getStorage } from "firebase/storage";
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -22,6 +22,7 @@ if (!firebase.apps.length) {
 const app = initializeApp(config);
 const db = getFirestore(app);
 const storage = getStorage(app);
+// connectStorageEmulator(storage, "localhost", 9199);
 
 // const firebaseConfig = {
 //   storage,

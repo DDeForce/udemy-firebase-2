@@ -1,6 +1,8 @@
 import firebase from "./FirebaseConfig";
 
 const auth = firebase.auth();
+// use Emulator
+// auth.useEmulator("http://localhost:9099");
 
 const registerUser = (email, password) => {
   return auth.createUserWithEmailAndPassword(email, password);

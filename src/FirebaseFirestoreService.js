@@ -5,6 +5,7 @@ import { db } from "./FirebaseConfig";
 // import db from "./FirebaseConfig";
 
 const firestore = firebase.firestore();
+// firestore.useEmulator("localhost", 8080);
 
 const createDocument = (collection, document) => {
   return firestore.collection(collection).add(document);
