@@ -189,21 +189,21 @@ const AddEditRecipeForm = ({
           <tbody>
             {ingredients && ingredients.length > 0
               ? ingredients.map((ingredient, i) => {
-                  return (
-                    <tr key={ingredient}>
-                      <td className="table-data text-center">{ingredient}</td>
-                      <td className="ingedient-delete-box">
-                        <button
-                          type="button"
-                          className="secondary-button ingredient-delete-button"
-                          onClick={() => handleDeleteIngredient(ingredient)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
+                return (
+                  <tr key={ingredient}>
+                    <td className="table-data text-center">{ingredient}</td>
+                    <td className="ingedient-delete-box">
+                      <button
+                        type="button"
+                        className="secondary-button ingredient-delete-button"
+                        onClick={() => handleDeleteIngredient(ingredient)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
               : null}
           </tbody>
         </table>
