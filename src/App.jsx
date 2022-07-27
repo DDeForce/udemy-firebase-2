@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import { Cart, InfoCon, ButtonForCart, Unpublished } from "./style/App.styled";
 
 // firebase
 import firebaseAuthService from "./FirebaseAuthService";
 import FirebaseFirestoreService from "./FirebaseFirestoreService";
 
 // css
-import "./App.scss";
+// import "./App.scss";
 
 // components
 import LoginForm from "./components/LoginForm";
@@ -301,12 +302,14 @@ function App() {
             {recipes && recipes.length > 0 ? (
               <div className="recipe-list">
                 {recipes.map((recipe, i) => (
-                  <div className="recipe-card" key={i}>
+                  <Cart image={recipe.imageUrl} key={i}>
                     {recipe.isPublished === false ? (
-                      <div className="unpublished">UNPUBLISHED</div>
-                    ) : null}
-                    <div className="recipe-name">{recipe.name}</div>
-                    <div className="recipe-image-box">
+                      <Unpublished>UNPUBLISHED</Unpublished>
+                    ) : <div></div>}
+                    <div>
+                      <InfoCon>
+                        <h2>{recipe.name}</h2>
+                        {/* <ImageBox className="recipe-image-box">
                       {recipe.imageUrl ? (
                         <img
                           src={recipe.imageUrl}
@@ -314,23 +317,26 @@ function App() {
                           className="recipe-image"
                         />
                       ) : null}
+                    </ImageBox> */}
+                        <h4>
+                          Category: {lookupCategoryLabel(recipe.category)}
+                        </h4>
+                        <h3>
+                          Publish Date: {formatDate(recipe.publishDate)}
+                        </h3>
+                      </InfoCon>
+
+                      {user ? (
+                        <ButtonForCart
+                          type="button"
+                          className="primary-button edit-button"
+                          onClick={() => handleEditRecipeClick(recipe.id)}
+                        >
+                          <h4>Edit</h4>
+                        </ButtonForCart>
+                      ) : null}
                     </div>
-                    <div className="recipe-field">
-                      Category: {lookupCategoryLabel(recipe.category)}
-                    </div>
-                    <div className="recipe-field">
-                      Publish Date: {formatDate(recipe.publishDate)}
-                    </div>
-                    {user ? (
-                      <button
-                        type="button"
-                        className="primary-button edit-button"
-                        onClick={() => handleEditRecipeClick(recipe.id)}
-                      >
-                        Edit
-                      </button>
-                    ) : null}
-                  </div>
+                  </Cart>
                 ))}
               </div>
             ) : null}
