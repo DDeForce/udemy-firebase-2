@@ -11,6 +11,7 @@ export const Cart = styled.div`
   width: 17rem;
   background-image: url(${(porps) => porps.image});
   background-size: cover;
+  background-position: center;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
