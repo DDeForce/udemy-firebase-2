@@ -1,5 +1,15 @@
 import styled from "styled-components";
 
+export const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #fac300;
+  h1 {
+    margin-left: 20px;
+  }
+`;
+
 export const Cart = styled.div`
   /* position: absolute; */
   width: 242.3px;
@@ -59,6 +69,11 @@ export const ButtonForCart = styled.div`
   h4 {
     position: relative;
     left: 40%;
+    top: 17px;
+  }
+
+  &:hover {
+    background-color: #d1a301;
   }
 `;
 

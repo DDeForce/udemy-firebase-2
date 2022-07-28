@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Cart, InfoCon, ButtonForCart, Unpublished } from "./style/App.styled";
+import { Cart, InfoCon, ButtonForCart, Unpublished, Header } from "./style/App.styled";
 
 // firebase
 import firebaseAuthService from "./FirebaseAuthService";
@@ -242,10 +242,10 @@ function App() {
 
   return (
     <div className="App">
-      <div className="title-row">
+      <Header>
         <h1 className="title">Firebase Recipes</h1>
         <LoginForm existingUser={user} />
-      </div>
+      </Header>
       <div className="main">
         <div className="row filters">
           <label className="recipe-label input-label">
