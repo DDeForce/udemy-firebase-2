@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Cart, InfoCon, ButtonForCart, Unpublished, Header } from "./style/App.styled";
+import { Cart, InfoCon, ButtonForCart, Unpublished, Header, RecipeListBox, RecipeList } from "./style/App.styled";
 
 // firebase
 import firebaseAuthService from "./FirebaseAuthService";
@@ -284,7 +284,7 @@ function App() {
           </label>
         </div>
         <div className="center">
-          <div className="recipe-list-box">
+          <RecipeListBox>
             {isLoading ? (
               <div className="fire">
                 <div className="flames">
@@ -300,7 +300,7 @@ function App() {
               <h5 className="no-recipes">No recipes founds</h5>
             ) : null}
             {recipes && recipes.length > 0 ? (
-              <div className="recipe-list">
+              <RecipeList>
                 {recipes.map((recipe, i) => (
                   <Cart image={recipe.imageUrl} key={i}>
                     {recipe.isPublished === false ? (
@@ -332,15 +332,15 @@ function App() {
                           className="primary-button edit-button"
                           onClick={() => handleEditRecipeClick(recipe.id)}
                         >
-                          <h4>Edit</h4>
+                          <h4>Edit Recipe</h4>
                         </ButtonForCart>
                       ) : null}
                     </div>
                   </Cart>
                 ))}
-              </div>
+              </RecipeList>
             ) : null}
-          </div>
+          </RecipeListBox>
         </div>
         {recipes && recipes.length > 0 ? (
           <>

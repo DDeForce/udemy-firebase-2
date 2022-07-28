@@ -10,6 +10,24 @@ export const Header = styled.div`
   }
 `;
 
+export const RecipeListBox = styled.div`
+  width: 70rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+`;
+
+export const RecipeList = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+`;
+
 export const Cart = styled.div`
   /* position: absolute; */
   width: 242.3px;
@@ -66,9 +84,10 @@ export const ButtonForCart = styled.div`
   border-bottom-right-radius: 6px;
   background-color: #ffc700;
   color: black;
+  cursor: pointer;
   h4 {
     position: relative;
-    left: 40%;
+    left: 33%;
     top: 17px;
   }
 
