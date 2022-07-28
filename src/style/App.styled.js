@@ -10,8 +10,38 @@ export const Header = styled.div`
   }
 `;
 
+export const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 90%; */
+`;
+
+export const RowFilters = styled.div`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 85rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Filters = styled.label`
+  display: flex;
+  align-items: center;
+
+  select {
+    cursor: pointer;
+    user-select: none;
+    margin-left: 0.35rem;
+    outline: none;
+    font-size: 0.9rem;
+    background: #d9d9d9;
+    border: none;
+  }
+`;
+
 export const RecipeListBox = styled.div`
-  width: 70rem;
+  width: 88rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,8 +58,34 @@ export const RecipeList = styled.div`
   flex-wrap: wrap;
 `;
 
+export const AddCart = styled.div`
+  width: 242.3px;
+  height: 324.98px;
+  background: #d9d9d9;
+  border-radius: 6px;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  color: white;
+  cursor: pointer;
+
+  div {
+    margin-top: 200px;
+    width: 115.25px;
+    height: 44.36px;
+    background-color: rgb(0, 0, 0, 0.25);
+  }
+  h3 {
+    margin: 0;
+    margin-left: 5px;
+  }
+  &:hover {
+    div {
+      background-color: rgb(0, 0, 0, 0.5);
+    }
+  }
+`;
+
 export const Cart = styled.div`
-  /* position: absolute; */
   width: 242.3px;
   height: 324.98px;
   width: 100%;
@@ -100,6 +156,35 @@ export const Unpublished = styled.h4`
   width: 100%;
   background-color: rgb(0, 0, 0, 0.8);
   margin: 0;
+  text-align: center;
+  padding: 10px 0px 10px 0px;
+`;
+
+export const PaginationButton = styled.div`
+  width: 15rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  margin-top: 6px;
+
+  button {
+    height: 28px;
+    background-color: #ffc700;
+    border: none;
+    /* color: white; */
+    padding: 0px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    /* margin: 12px 2px; */
+    cursor: pointer;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+
+    &:hover {
+      background-color: #d1a301;
+    }
+  }
 `;
 
 // export const ImageBox = styled.div`

@@ -10,7 +10,7 @@ body {
     background: url(${background});
     background-size: cover;
     content: "";
-    opacity: 0.2;
+    opacity: 0.15;
     position: absolute;
     top: 0;
     bottom: 0;

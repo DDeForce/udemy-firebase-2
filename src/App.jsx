@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Cart, InfoCon, ButtonForCart, Unpublished, Header, RecipeListBox, RecipeList } from "./style/App.styled";
+import { Cart, InfoCon, ButtonForCart, Unpublished, Header, RecipeListBox, PaginationButton, RecipeList, AddCart, Main, RowFilters, Filters } from "./style/App.styled";
 
 // firebase
 import firebaseAuthService from "./FirebaseAuthService";
@@ -246,14 +246,13 @@ function App() {
         <h1 className="title">Firebase Recipes</h1>
         <LoginForm existingUser={user} />
       </Header>
-      <div className="main">
-        <div className="row filters">
-          <label className="recipe-label input-label">
-            category:
+      <Main>
+        <RowFilters>
+          <Filters>
+            Category:
             <select
               value={categoryFilter}
               required
-              className="select"
               onChange={(e) => setCategoryFilter(e.target.value)}
             >
               <option value=""></option>
@@ -267,8 +266,9 @@ function App() {
               S<option value="fishAndSeafood">Fish & Seafood</option>
               <option value="vegetables">Vegetables</option>
             </select>
-          </label>
-          <label className="input-label">
+          </Filters>
+          <Filters>
+            Order By:
             <select
               value={orderBy}
               className="select"
@@ -281,8 +281,8 @@ function App() {
                 Publish Date (oldest - newest)
               </option>
             </select>
-          </label>
-        </div>
+          </Filters>
+        </RowFilters>
         <div className="center">
           <RecipeListBox>
             {isLoading ? (
@@ -301,6 +301,12 @@ function App() {
             ) : null}
             {recipes && recipes.length > 0 ? (
               <RecipeList>
+                <AddCart>
+                  <div>
+                    <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +</h3>
+                    <h3>Add Recipe</h3>
+                  </div>
+                </AddCart>
                 {recipes.map((recipe, i) => (
                   <Cart image={recipe.imageUrl} key={i}>
                     {recipe.isPublished === false ? (
@@ -344,7 +350,7 @@ function App() {
         </div>
         {recipes && recipes.length > 0 ? (
           <>
-            <label className="input-label">
+            <Filters>
               Recipes Per Page:
               <select
                 value={recipesPerPage}
@@ -355,8 +361,8 @@ function App() {
                 <option value="6">6</option>
                 <option value="9">9</option>
               </select>
-            </label>
-            <div className="pagination">
+            </Filters>
+            <PaginationButton>
               <button
                 type="button"
                 className="primary-button"
@@ -364,7 +370,7 @@ function App() {
               >
                 Load more recipes
               </button>
-            </div>
+            </PaginationButton>
           </>
         ) : null}
         {user ? (
@@ -376,7 +382,7 @@ function App() {
             handleAddRecipe={handleAddRecipe}
           />
         ) : null}
-      </div>
+      </Main>
     </div>
   );
 }
