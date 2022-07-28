@@ -350,7 +350,7 @@ function App() {
         </div>
         {recipes && recipes.length > 0 ? (
           <>
-            <Filters>
+            <Filters width={"207px"} >
               Recipes Per Page:
               <select
                 value={recipesPerPage}

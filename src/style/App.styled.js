@@ -28,6 +28,8 @@ export const RowFilters = styled.div`
 export const Filters = styled.label`
   display: flex;
   align-items: center;
+  width: ${(props) => props.width || "auto"};
+  justify-content: space-between;
 
   select {
     cursor: pointer;
