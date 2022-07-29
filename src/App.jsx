@@ -1,5 +1,18 @@
 import { useState, useEffect } from "react";
-import { Cart, InfoCon, ButtonForCart, Unpublished, Header, RecipeListBox, PaginationButton, RecipeList, AddCart, Main, RowFilters, Filters } from "./style/App.styled";
+import {
+  Cart,
+  InfoCon,
+  ButtonForCart,
+  Unpublished,
+  Header,
+  RecipeListBox,
+  PaginationButton,
+  RecipeList,
+  AddCart,
+  Main,
+  RowFilters,
+  Filters
+} from "./style/App.styled";
 
 // firebase
 import firebaseAuthService from "./FirebaseAuthService";
@@ -19,6 +32,9 @@ function App() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderBy, setOrderBy] = useState("publishDateDesc");
   const [recipesPerPage, setRecipesPerPage] = useState(3);
+
+  const [isOpenAdd, setIsOpenAdd] = useState(false);
+
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -235,10 +251,13 @@ function App() {
   }, [user, categoryFilter, orderBy, recipesPerPage]);
 
   // useEfect for debuging purpuses
-  // useEffect(() => {
-  //   console.log(`recipes in App.js: `, recipes);
-  //   console.log(`current recipe in App.js: `, currentRecipe);
-  // }, [currentRecipe, recipes]);
+  useEffect(() => {
+    console.log(`recipes in App.js: `, recipes);
+    console.log(`current recipe in App.js: `, currentRecipe);
+    console.log(`isOpenAdd: `, isOpenAdd)
+    console.log(`isOpenAdd: `, user)
+  }, [user, isOpenAdd]);
+
 
   return (
     <div className="App">
@@ -301,12 +320,14 @@ function App() {
             ) : null}
             {recipes && recipes.length > 0 ? (
               <RecipeList>
-                <AddCart>
-                  <div>
-                    <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +</h3>
-                    <h3>Add Recipe</h3>
-                  </div>
-                </AddCart>
+                {user ?
+                  <AddCart onClick={() => setIsOpenAdd(true)}>
+                    <div>
+                      <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +</h3>
+                      <h3>Add Recipe</h3>
+                    </div>
+                  </AddCart>
+                  : null}
                 {recipes.map((recipe, i) => (
                   <Cart image={recipe.imageUrl} key={i}>
                     {recipe.isPublished === false ? (
@@ -315,15 +336,6 @@ function App() {
                     <div>
                       <InfoCon>
                         <h2>{recipe.name}</h2>
-                        {/* <ImageBox className="recipe-image-box">
-                      {recipe.imageUrl ? (
-                        <img
-                          src={recipe.imageUrl}
-                          alt={recipe.name}
-                          className="recipe-image"
-                        />
-                      ) : null}
-                    </ImageBox> */}
                         <h4>
                           Category: {lookupCategoryLabel(recipe.category)}
                         </h4>

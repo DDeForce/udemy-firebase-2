@@ -81,6 +81,7 @@ export const AddCart = styled.div`
     margin-left: 5px;
   }
   &:hover {
+    background: #cdcdcd;
     div {
       background-color: rgb(0, 0, 0, 0.5);
     }
