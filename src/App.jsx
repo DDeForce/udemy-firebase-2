@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+
+// styled-components
 import {
   Cart,
   InfoCon,
@@ -24,6 +26,7 @@ import FirebaseFirestoreService from "./FirebaseFirestoreService";
 // components
 import LoginForm from "./components/LoginForm";
 import AddEditRecipeForm from "./components/AddEditRecipeForm";
+import CardsTable from "./components/CardsTable";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -32,8 +35,6 @@ function App() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderBy, setOrderBy] = useState("publishDateDesc");
   const [recipesPerPage, setRecipesPerPage] = useState(3);
-
-  const [isOpenAdd, setIsOpenAdd] = useState(false);
 
 
   const [isLoading, setIsLoading] = useState(false);
@@ -236,7 +237,7 @@ function App() {
 
   // useEfects
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     fetchRecipes()
       .then((fetchRecipes) => {
@@ -246,17 +247,14 @@ function App() {
         console.log(error.massage);
         throw error;
       })
-      .finally(() => setIsLoading(false));
+      .finally(
+      // () => setIsLoading(false)
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, categoryFilter, orderBy, recipesPerPage]);
 
   // useEfect for debuging purpuses
-  useEffect(() => {
-    console.log(`recipes in App.js: `, recipes);
-    console.log(`current recipe in App.js: `, currentRecipe);
-    console.log(`isOpenAdd: `, isOpenAdd)
-    console.log(`isOpenAdd: `, user)
-  }, [user, isOpenAdd]);
+
 
 
   return (
@@ -266,100 +264,17 @@ function App() {
         <LoginForm existingUser={user} />
       </Header>
       <Main>
-        <RowFilters>
-          <Filters>
-            Category:
-            <select
-              value={categoryFilter}
-              required
-              onChange={(e) => setCategoryFilter(e.target.value)}
-            >
-              <option value=""></option>
-              <option value="breadsSandwichesAndPizzas">
-                Breads, Sandwiches and Pizzas
-              </option>
-              <option value="eggsAndBreakfast">Eggs & Breakfast</option>
-              <option value="dessertsAndBakedGoods">
-                Desserts & Baked Goods
-              </option>
-              S<option value="fishAndSeafood">Fish & Seafood</option>
-              <option value="vegetables">Vegetables</option>
-            </select>
-          </Filters>
-          <Filters>
-            Order By:
-            <select
-              value={orderBy}
-              className="select"
-              onChange={(e) => setOrderBy(e.target.value)}
-            >
-              <option value="publishDateDesc">
-                Publish Date (newest - oldest)
-              </option>
-              <option value="publishDateAsc">
-                Publish Date (oldest - newest)
-              </option>
-            </select>
-          </Filters>
-        </RowFilters>
-        <div className="center">
-          <RecipeListBox>
-            {isLoading ? (
-              <div className="fire">
-                <div className="flames">
-                  <div className="flame"></div>
-                  <div className="flame"></div>
-                  <div className="flame"></div>
-                  <div className="flame"></div>
-                </div>
-                <div className="logs"></div>
-              </div>
-            ) : null}
-            {isLoading && recipes && recipes.length > 0 ? (
-              <h5 className="no-recipes">No recipes founds</h5>
-            ) : null}
-            {recipes && recipes.length > 0 ? (
-              <RecipeList>
-                {user ?
-                  <AddCart onClick={() => setIsOpenAdd(true)}>
-                    <div>
-                      <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +</h3>
-                      <h3>Add Recipe</h3>
-                    </div>
-                  </AddCart>
-                  : null}
-                {recipes.map((recipe, i) => (
-                  <Cart image={recipe.imageUrl} key={i}>
-                    {recipe.isPublished === false ? (
-                      <Unpublished>UNPUBLISHED</Unpublished>
-                    ) : <div></div>}
-                    <div>
-                      <InfoCon>
-                        <h2>{recipe.name}</h2>
-                        <h4>
-                          Category: {lookupCategoryLabel(recipe.category)}
-                        </h4>
-                        <h3>
-                          Publish Date: {formatDate(recipe.publishDate)}
-                        </h3>
-                      </InfoCon>
-
-                      {user ? (
-                        <ButtonForCart
-                          type="button"
-                          className="primary-button edit-button"
-                          onClick={() => handleEditRecipeClick(recipe.id)}
-                        >
-                          <h4>Edit Recipe</h4>
-                        </ButtonForCart>
-                      ) : null}
-                    </div>
-                  </Cart>
-                ))}
-              </RecipeList>
-            ) : null}
-          </RecipeListBox>
-        </div>
+        <CardsTable
+          user={user}
+          recipes={recipes}
+          handleEditRecipeClick={handleEditRecipeClick}
+          formatDate={formatDate}
+          lookupCategoryLabel={lookupCategoryLabel}
+          categoryFilter={categoryFilter}
+          setCategoryFilter={setCategoryFilter}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+        />
         {recipes && recipes.length > 0 ? (
           <>
             <Filters width={"207px"} >
@@ -385,16 +300,18 @@ function App() {
             </PaginationButton>
           </>
         ) : null}
-        {user ? (
-          <AddEditRecipeForm
-            existingRecipe={currentRecipe}
-            handleUpdateRecipe={handleUpdateRecipe}
-            handleDeleteRecipe={handleDeleteRecipe}
-            handleEditRecipeCancel={handleEditRecipeCancel}
-            handleAddRecipe={handleAddRecipe}
-          />
-        ) : null}
+        {user ?
+          (
+            <AddEditRecipeForm
+              existingRecipe={currentRecipe}
+              handleUpdateRecipe={handleUpdateRecipe}
+              handleDeleteRecipe={handleDeleteRecipe}
+              handleEditRecipeCancel={handleEditRecipeCancel}
+              handleAddRecipe={handleAddRecipe}
+            />
+          ) : null}
       </Main>
+
     </div>
   );
 }

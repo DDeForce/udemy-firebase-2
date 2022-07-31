@@ -8,6 +8,8 @@ body {
   
   &:after {
     background: url(${background});
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
     content: "";
     opacity: 0.15;
