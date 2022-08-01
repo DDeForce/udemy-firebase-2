@@ -1,6 +1,4 @@
 import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react'
 
 import {
   Cart,
@@ -8,7 +6,6 @@ import {
   ButtonForCart,
   Unpublished,
   RecipeListBox,
-  PaginationButton,
   RecipeList,
   AddCart,
   RowFilters,
@@ -16,12 +13,6 @@ import {
 } from "./style/CardsTable.styled";
 
 const CardsTable = (props) => {
-  const [test, setTest] = useState(false);
-
-
-  useEffect(() => {
-    console.log(test)
-  }, [test])
 
   return (
     <>
@@ -68,7 +59,7 @@ const CardsTable = (props) => {
         {props.recipes && props.recipes.length > 0 ? (
           <RecipeList>
             {props.user ?
-              <AddCart >
+              <AddCart onClick={props.handleAddModal} >
                 <div>
                   <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +</h3>
                   <h3>Add Recipe</h3>
@@ -106,7 +97,6 @@ const CardsTable = (props) => {
           </RecipeList>
         ) : null}
       </RecipeListBox>
-      <button onClick={() => setTest(!test)}>Test</button>
     </>
   )
 }

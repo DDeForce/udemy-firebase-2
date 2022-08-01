@@ -36,14 +36,12 @@ function App() {
   const [orderBy, setOrderBy] = useState("publishDateDesc");
   const [recipesPerPage, setRecipesPerPage] = useState(3);
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
   // delay for bug in edit
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
-  // setting user
-  firebaseAuthService.subcribeToAuthChanges(setUser);
 
   // handleing add recipes
   const handleAddRecipe = async (newRecipe) => {
@@ -154,6 +152,11 @@ function App() {
     }
   };
 
+  const handleAddModal = () => {
+    setCurrentRecipe(null);
+    setIsOpenModal(true);
+  }
+
   // handling edit recipes
   const handleUpdateRecipe = async (newRecipe, recipeId) => {
     try {
@@ -171,6 +174,7 @@ function App() {
       alert(error.message);
       throw error;
     }
+    setIsOpenModal(false);
   };
 
   const handleEditRecipeClick = async (recipeId) => {
@@ -184,6 +188,7 @@ function App() {
       setCurrentRecipe(selectedRecipe);
       window.scrollTo(0, document.body.scrollHeight);
     }
+    setIsOpenModal(true);
   };
 
   const handleEditRecipeCancel = async () => {
@@ -253,9 +258,10 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, categoryFilter, orderBy, recipesPerPage]);
 
-  // useEfect for debuging purpuses
-
-
+  // setting user
+  useEffect(() => {
+    firebaseAuthService.subcribeToAuthChanges(setUser);
+  }, [])
 
   return (
     <div className="App">
@@ -274,6 +280,7 @@ function App() {
           setCategoryFilter={setCategoryFilter}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          handleAddModal={handleAddModal}
         />
         {recipes && recipes.length > 0 ? (
           <>
@@ -300,7 +307,7 @@ function App() {
             </PaginationButton>
           </>
         ) : null}
-        {user ?
+        {user && isOpenModal ?
           (
             <AddEditRecipeForm
               existingRecipe={currentRecipe}
@@ -311,7 +318,6 @@ function App() {
             />
           ) : null}
       </Main>
-
     </div>
   );
 }

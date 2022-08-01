@@ -156,13 +156,11 @@ export const PaginationButton = styled.div`
     height: 28px;
     background-color: #ffc700;
     border: none;
-    /* color: white; */
     padding: 0px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    /* margin: 12px 2px; */
     cursor: pointer;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
