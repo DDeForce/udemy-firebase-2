@@ -194,6 +194,7 @@ function App() {
   const handleEditRecipeCancel = async () => {
     await delay(100);
     setCurrentRecipe(null);
+    setIsOpenModal(false);
   };
 
   // handling delete recipe
