@@ -1,7 +1,7 @@
 import { useState } from "react";
 import firebaseAuthService from "../FirebaseAuthService";
-import { LoginFormContainer, Row, LogoutButton, LoginButton, ResetPassButton } from './style/LoginForm.styled'
-
+import { LoginFormContainer, Row } from './style/LoginForm.styled'
+import { RightButton, MiddleButton } from './style/Buttons.styled'
 import React from "react";
 
 const LoginForm = ({ existingUser }) => {
@@ -52,13 +52,13 @@ const LoginForm = ({ existingUser }) => {
       {existingUser ? (
         <Row>
           <h3>Welcome, {existingUser.email}</h3>
-          <LogoutButton
+          <RightButton
             type="button"
             className="primary-button"
             onClick={handleLogout}
           >
             Logout
-          </LogoutButton>
+          </RightButton>
         </Row>
       ) : (
         <form onSubmit={handleSubmit} className="login-form">
@@ -83,14 +83,14 @@ const LoginForm = ({ existingUser }) => {
             />
           </label>
           <div className="button-box">
-            <LoginButton className="primary-button">Login</LoginButton>
-            <ResetPassButton
+            <MiddleButton className="primary-button">Login</MiddleButton>
+            <RightButton
               type="button"
               className="primary-button"
               onClick={handleSendResetPasswordEmail}
             >
               Reset Password
-            </ResetPassButton>
+            </RightButton>
             {/* <button
               type="button"
               className="primary-button"

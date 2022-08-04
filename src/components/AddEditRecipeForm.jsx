@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import ImageUploadPreview from "./ImageUploadPreview";
 import { ModalAddEdit, TopFormSection, Fields } from "./style/AddEditRecipeForm.styled";
+import { LeftButton, MiddleButton, RightButton } from "./style/Buttons.styled";
 import { Filters } from './style/CardsTable.styled'
 
 const AddEditRecipeForm = ({
@@ -228,37 +229,43 @@ const AddEditRecipeForm = ({
                 onKeyPress={handleAddIngredient}
               />
             </label>
-            <button
+            <RightButton
+              height="24px"
+              color="#FAC300"
+              colorHover="#d1a301"
+
               type="button"
               className="primary-button add-ingredient-button"
               onClick={handleAddIngredient}
             >
               Add Ingredient
-            </button>
+            </RightButton>
           </div>
         </div>
         <div className="action-buttons">
-          <button type="submit" className="primary-button action-button">
+          <LeftButton color="#FAC300" colorHover="#d1a301" type="submit" className="primary-button action-button">
             {existingRecipe ? "Edit Recipe" : "Create Recipe"}
-          </button>
-          <button
+          </LeftButton>
+          {existingRecipe ? (
+            <MiddleButton
+              color="#FAC300"
+              colorHover="#d1a301"
+              type="button"
+              className="primary-button action-button"
+              onClick={() => handleDeleteRecipe(existingRecipe.id)}
+            >
+              Delete
+            </MiddleButton>
+          ) : null}
+          <RightButton
+            color="#FAC300"
+            colorHover="#d1a301"
             type="button"
             onClick={handleEditRecipeCancel}
             className="primary-button action-button"
           >
             Cancel
-          </button>
-          {existingRecipe ? (
-            <>
-              <button
-                type="button"
-                className="primary-button action-button"
-                onClick={() => handleDeleteRecipe(existingRecipe.id)}
-              >
-                Delete
-              </button>
-            </>
-          ) : null}
+          </RightButton>
         </div>
       </form>
 

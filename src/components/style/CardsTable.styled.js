@@ -144,6 +144,7 @@ export const Unpublished = styled.h4`
   margin: 0;
   text-align: center;
   padding: 10px 0px 10px 0px;
+  border-radius: 6px 6px 0px 0px;
 `;
 
 export const PaginationButton = styled.div`
