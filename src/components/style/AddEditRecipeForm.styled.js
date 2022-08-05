@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const ModalAddEdit = styled.div`
+  width: 940px;
+  height: 700px;
   margin: 70px;
   padding: 20px 50px 50px 50px;
   position: fixed;
@@ -33,7 +35,7 @@ export const IngredientsList = styled.div`
 export const TopFormSection = styled.div`
   display: flex;
   justify-content: space-between;
-  text-align: center;
+  /* text-align: center; */
   flex-direction: row;
   align-items: center;
   width: 20rem;
@@ -60,4 +62,9 @@ export const ImageInputBox = styled.div`
   object-fit: cover;
   width: 12rem;
   border-radius: 0.4rem 0.4rem 0 0;
+`;
+
+export const ActionButtons = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

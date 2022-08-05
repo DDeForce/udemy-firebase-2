@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import ImageUploadPreview from "./ImageUploadPreview";
-import { ModalAddEdit, TopFormSection, Fields, ImageInputBox, IngredientsList } from "./style/AddEditRecipeForm.styled";
+import { ModalAddEdit, TopFormSection, Fields, ImageInputBox, IngredientsList, ActionButtons } from "./style/AddEditRecipeForm.styled";
 import { LeftButton, MiddleButton, RightButton } from "./style/Buttons.styled";
 import { Filters } from './style/CardsTable.styled'
 
@@ -115,7 +115,6 @@ const AddEditRecipeForm = ({
 
         <TopFormSection>
           <ImageInputBox>
-            Recipe image
             <ImageUploadPreview
               basePath="recipes"
               existingImageUrl={imageUrl}
@@ -242,7 +241,7 @@ const AddEditRecipeForm = ({
             </RightButton>
           </div>
         </IngredientsList>
-        <div className="action-buttons">
+        <ActionButtons>
           <LeftButton color="#FAC300" colorHover="#d1a301" type="submit" className="primary-button action-button">
             {existingRecipe ? "Edit Recipe" : "Create Recipe"}
           </LeftButton>
@@ -266,7 +265,7 @@ const AddEditRecipeForm = ({
           >
             Cancel
           </RightButton>
-        </div>
+        </ActionButtons>
       </form>
 
     </ModalAddEdit>
