@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import FirebaseStorageService from "../FirebaseStorageService";
+import { ImageUploadPreviewContainer } from "./style/ImageUploadPreview.styled";
 
 const ImageUploadPreview = ({
   basePath,
@@ -62,7 +63,7 @@ const ImageUploadPreview = ({
   }, [existingImageUrl]);
 
   return (
-    <div className="image-upload-preview-container">
+    <ImageUploadPreviewContainer>
       <input
         type="file"
         accept="image/*"
@@ -91,7 +92,7 @@ const ImageUploadPreview = ({
           </button>
         </div>
       ) : null}
-    </div>
+    </ImageUploadPreviewContainer>
   );
 };
 
