@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import ImageUploadPreview from "./ImageUploadPreview";
-import { ModalAddEdit, TopFormSection, Fields, ImageInputBox, IngredientsList, ActionButtons } from "./style/AddEditRecipeForm.styled";
+import { ModalAddEdit, TopFormSection, Fields, ImageInputBox, IngredientsForm, IngredientsList, ActionButtons } from "./style/AddEditRecipeForm.styled";
 import { LeftButton, MiddleButton, RightButton } from "./style/Buttons.styled";
 import { Filters } from './style/CardsTable.styled'
 
@@ -216,7 +216,7 @@ const AddEditRecipeForm = ({
             </h3>
           ) : null}
 
-          <div className="ingredient-form">
+          <IngredientsForm>
             <label className="recipe-label input-label">
               Ingredient:
               <input
@@ -239,7 +239,7 @@ const AddEditRecipeForm = ({
             >
               Add Ingredient
             </RightButton>
-          </div>
+          </IngredientsForm>
         </IngredientsList>
         <ActionButtons>
           <LeftButton color="#FAC300" colorHover="#d1a301" type="submit" className="primary-button action-button">

@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const ModalAddEdit = styled.div`
   width: 940px;
-  height: 700px;
   margin: 70px;
   padding: 20px 50px 50px 50px;
   position: fixed;
@@ -13,6 +12,11 @@ export const ModalAddEdit = styled.div`
   border-radius: 0.4rem;
   margin-bottom: 3rem;
   background: #fff;
+`;
+
+export const IngredientsForm = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const IngredientsList = styled.div`
