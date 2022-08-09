@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import ImageUploadPreview from "./ImageUploadPreview";
-import { ModalAddEdit, TopFormSection, Fields, ImageInputBox, IngredientsForm, IngredientsList, ActionButtons } from "./style/AddEditRecipeForm.styled";
+import { ModalAddEdit, TopFormSection, Fields, ImageInputBox, DeleteButtonIng, IngredientsForm, IngredientsList, ActionButtons, NoIngredients } from "./style/AddEditRecipeForm.styled";
 import { LeftButton, MiddleButton, RightButton } from "./style/Buttons.styled";
 import { Filters } from './style/CardsTable.styled'
 
@@ -196,13 +196,13 @@ const AddEditRecipeForm = ({
                     <tr key={ingredient}>
                       <td className="table-data text-center">{ingredient}</td>
                       <td className="ingedient-delete-box">
-                        <button
+                        <DeleteButtonIng
                           type="button"
                           className="secondary-button ingredient-delete-button"
                           onClick={() => handleDeleteIngredient(ingredient)}
                         >
                           Delete
-                        </button>
+                        </DeleteButtonIng>
                       </td>
                     </tr>
                   );
@@ -211,14 +211,14 @@ const AddEditRecipeForm = ({
             </tbody>
           </table>
           {ingredients && ingredients.length === 0 ? (
-            <h3 className="text-center no-ingredients">
+            <NoIngredients>
               No Ingredients Added Yet
-            </h3>
+            </NoIngredients>
           ) : null}
 
           <IngredientsForm>
             <label className="recipe-label input-label">
-              Ingredient:
+              Ingredient: &nbsp;
               <input
                 type="text"
                 value={ingredientName}

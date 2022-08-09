@@ -54,6 +54,9 @@ export const ImageUpload = styled.label`
   input {
     display: none;
   }
+  &:hover {
+    color: red;
+  }
   /* img {
     object-fit: cover;
     width: 12rem;

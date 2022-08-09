@@ -53,11 +53,11 @@ function App() {
 
       handleFetchRecipes();
 
+      setIsOpenModal(false);
       alert(`succesfully created a recipe with an ID = ${response.id}`);
     } catch (error) {
       alert(error.massage);
     }
-    setIsOpenModal(false);
   };
 
   const fetchRecipes = async (cursorId = "") => {
@@ -168,6 +168,7 @@ function App() {
       );
       handleFetchRecipes();
 
+      setIsOpenModal(false);
       alert(`Successfuly updated a recipe with id of ${recipeId}`);
 
       await setCurrentRecipe(null);
@@ -175,7 +176,6 @@ function App() {
       alert(error.message);
       throw error;
     }
-    setIsOpenModal(false);
   };
 
   const handleEditRecipeClick = async (recipeId) => {

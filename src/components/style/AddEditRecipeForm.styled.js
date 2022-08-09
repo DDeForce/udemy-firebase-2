@@ -17,6 +17,10 @@ export const ModalAddEdit = styled.div`
 export const IngredientsForm = styled.div`
   display: flex;
   justify-content: space-between;
+  label {
+    gap: 5px;
+    margin-top: 14px;
+  }
 `;
 
 export const IngredientsList = styled.div`
@@ -77,4 +81,19 @@ export const ImageInputBox = styled.div`
 export const ActionButtons = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const NoIngredients = styled.h3`
+  text-align: center;
+  color: #f00;
+`;
+
+export const DeleteButtonIng = styled.h4`
+  text-align: center;
+  color: #9f1108;
+  &:hover {
+    cursor: pointer;
+    color: #f00;
+  }
+  margin: 0;
 `;

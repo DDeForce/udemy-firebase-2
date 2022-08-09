@@ -66,6 +66,10 @@ const ImageUploadPreview = ({
     }
   }, [existingImageUrl]);
 
+  useEffect(() => {
+    console.log(`Ref: => ${fileInputRef}`)
+  }, [fileInputRef])
+
   return (
     <ImageUploadPreviewContainer>
       <ImageUpload>
@@ -81,7 +85,6 @@ const ImageUploadPreview = ({
 
       {!imageUrl && uploadProgress > -1 ? (
         <div>
-          <label htmlFor="file">Upload progress:</label>
           <progress id="file" value={uploadProgress} max="100">
             {uploadProgress}%
           </progress>
