@@ -113,7 +113,7 @@ const AddEditRecipeForm = ({
 
         {existingRecipe ? <h2>Edit the recipe</h2> : <h2>Add a new recipe</h2>}
 
-        <TopFormSection>
+        <TopFormSection id="topForm">
           <ImageInputBox>
             <ImageUploadPreview
               basePath="recipes"

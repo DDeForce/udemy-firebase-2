@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import FirebaseStorageService from "../FirebaseStorageService";
-import { ImageUploadPreviewContainer, ImagePreview, ImageButton } from "./style/ImageUploadPreview.styled";
+import { ImageUploadPreviewContainer, ImagePreview, ImageUpload } from "./style/ImageUploadPreview.styled";
 
 const ImageUploadPreview = ({
   basePath,
@@ -64,13 +64,17 @@ const ImageUploadPreview = ({
 
   return (
     <ImageUploadPreviewContainer>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        ref={fileInputRef}
-        hidden={uploadProgress > -1 || imageUrl}
-      />
+      <ImageUpload>
+        Select Image
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          hidden={uploadProgress > -1 || imageUrl}
+        />
+      </ImageUpload>
+
       {!imageUrl && uploadProgress > -1 ? (
         <div>
           <label htmlFor="file">Upload progress:</label>
