@@ -68,16 +68,7 @@ const ImageUploadPreview = ({
 
   return (
     <ImageUploadPreviewContainer>
-      <ImageUpload>
-        Select Image
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          ref={fileInputRef}
-          hidden={uploadProgress > -1 || imageUrl}
-        />
-      </ImageUpload>
+
 
       {!imageUrl && uploadProgress > -1 ? (
         <div>
@@ -99,7 +90,16 @@ const ImageUploadPreview = ({
             Cancel Image
           </button>
         </ImagePreview>
-      ) : null}
+      ) : <ImageUpload>
+        Select Image
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          hidden={uploadProgress > -1 || imageUrl}
+        />
+      </ImageUpload>}
     </ImageUploadPreviewContainer>
   );
 };
