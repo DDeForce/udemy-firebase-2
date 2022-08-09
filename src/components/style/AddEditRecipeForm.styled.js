@@ -41,16 +41,21 @@ export const TopFormSection = styled.div`
   justify-content: space-between;
   /* text-align: center; */
   flex-direction: row;
-  align-items: center;
-  width: 20rem;
+  /* align-items: center; */
 `;
 
 export const Fields = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: space-between;
+  justify-content: end;
   margin-bottom: 0.5rem;
+  gap: 15px;
+  label {
+    display: flex;
+    justify-content: end;
+    gap: 15px;
+  }
 `;
 
 export const ImageInputBox = styled.div`

@@ -12,7 +12,7 @@ export const Filters = styled.label`
   display: flex;
   align-items: center;
   width: ${(props) => props.width || "auto"};
-  justify-content: space-between;
+  justify-content: ${(props) => props.js || "space-between"};
 
   select {
     cursor: pointer;
