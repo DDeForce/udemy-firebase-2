@@ -57,6 +57,7 @@ function App() {
     } catch (error) {
       alert(error.massage);
     }
+    setIsOpenModal(false);
   };
 
   const fetchRecipes = async (cursorId = "") => {
@@ -217,6 +218,7 @@ function App() {
         throw error;
       }
     }
+    setIsOpenModal(false);
   };
 
   // formating for view
@@ -316,6 +318,7 @@ function App() {
               handleDeleteRecipe={handleDeleteRecipe}
               handleEditRecipeCancel={handleEditRecipeCancel}
               handleAddRecipe={handleAddRecipe}
+
             />
           ) : null}
       </Main>
