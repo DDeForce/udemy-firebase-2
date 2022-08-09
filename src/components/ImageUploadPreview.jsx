@@ -14,7 +14,7 @@ const ImageUploadPreview = ({
   const [uploadProgress, setUploadProgress] = useState(-1);
   const [imageUrl, setImageUrl] = useState("");
 
-  const fileInputRef = useRef();
+  const fileInputRef = useRef(null);
 
   const handleFileChange = async (event) => {
     const files = event.target.files;
@@ -47,18 +47,22 @@ const ImageUploadPreview = ({
 
   const handleCancelImageClick = () => {
     FirebaseStorageService.deleteFile(imageUrl);
-    fileInputRef.current.value = null;
-    setImageUrl("");
-    handleUploadCancel();
+    if (fileInputRef.current !== null) {
+      fileInputRef.current.value = null;
+      setImageUrl("");
+      handleUploadCancel();
+    }
   };
 
   useEffect(() => {
     if (existingImageUrl) {
       setImageUrl(existingImageUrl);
     } else {
-      setUploadProgress(-1);
-      setImageUrl("");
-      fileInputRef.current.value = null;
+      if (fileInputRef.current !== null) {
+        setUploadProgress(-1);
+        setImageUrl("");
+        fileInputRef.current.value = null;
+      }
     }
   }, [existingImageUrl]);
 
