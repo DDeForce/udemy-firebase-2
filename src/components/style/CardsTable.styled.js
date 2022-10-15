@@ -44,7 +44,7 @@ export const RecipeList = styled.div`
 `;
 
 export const AddCart = styled.div`
-  width: 242.3px;
+  width: 272px;
   height: 324.98px;
   background: #d9d9d9;
   border-radius: 6px;

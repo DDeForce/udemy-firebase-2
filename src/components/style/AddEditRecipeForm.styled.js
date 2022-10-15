@@ -27,14 +27,16 @@ export const IngredientsList = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
-  border: 0.1rem solid #000;
+  /* border: 0.1rem solid #000; */
   border-collapse: collapse;
+  background-color: #d9d9d9;
   table {
     margin-bottom: 1rem;
     border: 0.1rem solid #000;
     border-collapse: collapse;
     td {
-      border: 0.1rem solid #000;
+      border-top: 0.1rem solid #000;
+      border-left: 0.1rem solid #000;
       border-collapse: collapse;
     }
   }
