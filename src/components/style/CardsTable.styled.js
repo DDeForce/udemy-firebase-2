@@ -74,6 +74,8 @@ export const AddCart = styled.div`
 export const Cart = styled.div`
   width: 242.3px;
   height: 324.98px;
+  position: relative;
+
   width: 100%;
   padding: 0.75rem;
   margin-right: 1rem;
@@ -94,10 +96,11 @@ export const Cart = styled.div`
 `;
 
 export const InfoCon = styled.div`
-  position: relative;
-  display: flex;
+  position: absolute;
+  top: 55%;
+  /* display: flex;
   flex-direction: column;
-  justify-content: right;
+  justify-content: right; */
   gap: 0px;
 
   h2 {
