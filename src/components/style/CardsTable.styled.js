@@ -115,9 +115,10 @@ export const InfoCon = styled.div`
     margin: 0px;
   }
 
-  h4 {
+  h5 {
     background-color: rgb(0, 0, 0, 0.7);
     width: fit-content;
+    padding: 2px;
     margin: 0px;
   }
 `;

@@ -20,6 +20,7 @@ export const LoginFormContainer = styled.div`
       align-items: center;
       input {
         border: none;
+        margin: 10px;
       }
     }
   }

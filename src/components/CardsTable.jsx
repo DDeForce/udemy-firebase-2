@@ -75,9 +75,9 @@ const CardsTable = (props) => {
                   <div>
                     <InfoCon>
                       <h2>{recipe.name}</h2>
-                      <h4>
+                      <h5>
                         Category: {props.lookupCategoryLabel(recipe.category)}
-                      </h4>
+                      </h5>
                       <h3>
                         Publish Date: {props.formatDate(recipe.publishDate)}
                       </h3>
